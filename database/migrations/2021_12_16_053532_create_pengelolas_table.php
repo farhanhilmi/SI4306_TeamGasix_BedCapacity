@@ -17,11 +17,11 @@ class CreatePengelolasTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_hospital')->unsigned()->index()->nullable();
             $table->foreign('id_hospital')->references('id')->on('hospitals')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('id_users')->unsigned()->index()->nullable();
+            $table->foreign('id_users')->references('id')->on('users')->onDelete('cascade');
             $table->string('nama');
             $table->string('email')->unique();
-            $table->string('password');
-            $table->string('level')->default('Staff');
-            $table->rememberToken();
+            // $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -15,8 +15,9 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->bigInteger('id')->unsigned()->primary();
-            // $table->bigInteger('vaccine_id')->unsigned()->index()->nullable();
-            // $table->foreign('vaccine_id')->references('id')->on('vaccines')->onDelete('cascade');
+            $table->bigInteger('id_users')->unsigned()->index()->nullable();
+            $table->foreign('id_users')->references('id')->on('users')->onDelete('cascade');
+            // $table->string('password');
             $table->string('nama');
             $table->string('nik');
             $table->string('alamat');

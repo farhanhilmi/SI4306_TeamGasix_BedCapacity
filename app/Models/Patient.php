@@ -9,5 +9,6 @@ class Patient extends Model
 {
     use HasFactory;
     protected $table = 'patients';
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
+    protected $guarded = [];
 }
