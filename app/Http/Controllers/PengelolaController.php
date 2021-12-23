@@ -132,6 +132,7 @@ class PengelolaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pengelola::find($id)->delete();
+        return redirect('/data/pengelola');
     }
 }

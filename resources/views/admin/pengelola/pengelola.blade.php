@@ -51,8 +51,8 @@
 
                                 </td>
                                 <td class="align-middle text-center">
-                                    <a href="/data/pengelola/{{$data->id}}/edit"
-                                        class="text-secondary btn btn-sm text-sm font-weight-bold">Edit</a>
+                                    {{-- <a href="/data/pengelola/{{$data->id}}/edit"
+                                        class="text-secondary btn btn-sm text-sm font-weight-bold">Edit</a> --}}
                                     <form action="/data/pengelola/{{$data->id}}" method="post">
                                         @csrf
                                         @method('DELETE')
