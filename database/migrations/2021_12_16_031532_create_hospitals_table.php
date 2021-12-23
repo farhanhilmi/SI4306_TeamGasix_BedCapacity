@@ -19,6 +19,7 @@ class CreateHospitalsTable extends Migration
             $table->string('alamat');
             $table->string('email');
             $table->string('no_telp_rs');
+            $table->longText('maps');
             $table->timestamps();
         });
     }

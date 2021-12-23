@@ -27,4 +27,4 @@ Route::post('/register/proses', [Authentication::class, 'prosesRegistration'])->
 Route::post('/login/proses', [Authentication::class, 'prosesLogin'])->name('prosesLogin');
 
 Route::resource('data/pengelola', PengelolaController::class);
-Route::resource('data/hospitals', HospitalController::class)->name('GET', 'dataRumahSakit');
+Route::resource('data/hospitals', HospitalController::class);

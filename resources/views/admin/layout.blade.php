@@ -21,7 +21,7 @@
   <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
 </head>
 
-<body class="d-flex flex-column min-vh-100 g-sidenav-show  bg-gray-100">
+<body class="d-flex flex-column min-vh-100 g-sidenav-show bg-gray-100">
   @include('admin.sidebar')
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
     <!-- Navbar -->

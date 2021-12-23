@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hospital;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HospitalController extends Controller
 {
@@ -13,7 +15,10 @@ class HospitalController extends Controller
      */
     public function index()
     {
-        return view('admin.hospital');
+        $count = DB::table('hospitals')->count();
+        $hospitals = Hospital::orderBy('nama')->get();
+        $page = 'Data Rumah Sakit';
+        return view('admin.hospital', compact('hospitals', 'count', 'page'));
     }
 
     /**
@@ -23,7 +28,8 @@ class HospitalController extends Controller
      */
     public function create()
     {
-        //
+        $page = 'Input Rumah Sakit';
+        return view('admin.input_hospital', compact('page'));
     }
 
     /**
@@ -34,7 +40,16 @@ class HospitalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Hospital::create([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'alamat' => $request->alamat,
+            'email' => $request->email,
+            'no_telp_rs' => $request->no_telp_rs,
+            'maps' => $request->maps,
+        ]);
+
+        return redirect('/data/hospitals');
     }
 
     /**
@@ -56,7 +71,9 @@ class HospitalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $hospital = Hospital::find($id);
+        $page = 'Update Rumah Sakit ' . $hospital->nama;
+        return view('admin.update_hospital', compact('hospital', 'page'));
     }
 
     /**
@@ -68,7 +85,16 @@ class HospitalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Hospital::find($id)->update([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'alamat' => $request->alamat,
+            'email' => $request->email,
+            'no_telp_rs' => $request->no_telp_rs,
+            'maps' => $request->maps,
+        ]);
+
+        return redirect('/data/hospitals');
     }
 
     /**
@@ -79,6 +105,7 @@ class HospitalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Hospital::find($id)->delete();
+        return redirect('/data/hospitals');
     }
 }
