@@ -20,6 +20,7 @@ class CreatePengelolasTable extends Migration
             $table->bigInteger('id_users')->unsigned()->index()->nullable();
             $table->foreign('id_users')->references('id')->on('users')->onDelete('cascade');
             $table->string('nama');
+            $table->string('alamat');
             $table->string('email')->unique();
             // $table->rememberToken();
             $table->timestamps();

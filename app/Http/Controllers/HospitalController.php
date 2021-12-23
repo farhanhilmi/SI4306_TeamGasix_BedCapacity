@@ -42,7 +42,6 @@ class HospitalController extends Controller
     {
         Hospital::create([
             'nama' => $request->nama,
-            'email' => $request->email,
             'alamat' => $request->alamat,
             'email' => $request->email,
             'no_telp_rs' => $request->no_telp_rs,
