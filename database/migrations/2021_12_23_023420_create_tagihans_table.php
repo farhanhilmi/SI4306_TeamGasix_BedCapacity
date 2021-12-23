@@ -17,6 +17,10 @@ class CreateTagihansTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_pesan_kamar')->unsigned()->index()->nullable();
             $table->foreign('id_pesan_kamar')->references('id')->on('pesan_kamar')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('id_rawat')->unsigned()->index()->nullable();
+            $table->foreign('id_rawat')->references('id')->on('rawat')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('id_pesan_obat')->unsigned()->index()->nullable();
+            $table->foreign('id_pesan_obat')->references('id')->on('pesan_obat')->onDelete('cascade')->onUpdate('cascade');
             // $table->timestamp('check_in')->useCurrent = true;
             $table->dateTime('check_in');
             $table->dateTime('check_out')->nullable();

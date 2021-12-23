@@ -20,6 +20,7 @@ class CreatePengelolasTable extends Migration
             $table->string('nama');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('level')->default('Staff');
             $table->rememberToken();
             $table->timestamps();
         });
