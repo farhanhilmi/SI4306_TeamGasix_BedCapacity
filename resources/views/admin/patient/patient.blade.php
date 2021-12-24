@@ -8,7 +8,8 @@
                 @guest
                 <h1>GUEST</h1>
                 @endguest
-                <a href="/data/pengelola/create" class="btn btn-primary text-white btn-sm">Tambah Staff Pengelola</a>
+                {{-- <a href="/data/pengelola/create" class="btn btn-primary text-white btn-sm">Tambah Staff
+                    Pengelola</a> --}}
             </div>
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -18,20 +19,23 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NO
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama
-                                    Pengelola
+                                    Patient
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Rumah Sakit</th>
+                                    NIK</th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Email</th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    No. HP</th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($pengelola as $data)
+                            @foreach ($patients as $data)
                             <tr>
                                 <td>
                                     <div class="d-flex py-1 px-2">
@@ -44,16 +48,20 @@
                                     <p class="text-xs font-weight-bold mb-0">{{$data->nama}}</p>
                                 </td>
                                 <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{$data->rs}}</p>
+                                    <p class="text-xs font-weight-bold mb-0">{{$data->nik}}</p>
                                 </td>
                                 <td class="align-middle text-center">
                                     <p class="text-xs font-weight-bold mb-0">{{$data->email}}</p>
 
                                 </td>
                                 <td class="align-middle text-center">
-                                    {{-- <a href="/data/pengelola/{{$data->id}}/edit"
-                                        class="text-secondary btn btn-sm text-sm font-weight-bold">Edit</a> --}}
-                                    <form action="/data/pengelola/{{$data->id}}" method="post">
+                                    <p class="text-xs font-weight-bold mb-0">{{$data->no_hp}}</p>
+
+                                </td>
+                                <td class="align-middle text-center">
+                                    <a href="/data/patient/{{$data->id}}/show"
+                                        class="text-info btn btn-sm text-sm font-weight-bold">Detail</a>
+                                    <form action="/data/patient/{{$data->id}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

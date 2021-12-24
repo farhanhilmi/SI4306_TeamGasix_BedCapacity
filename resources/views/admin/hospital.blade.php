@@ -66,7 +66,7 @@
                                     <p class="text-xs font-weight-bold mb-0">{{$data->no_telp_rs}}</p>
 
                                 </td>
-                                <td class="align-middle text-center">
+                                <td class="align-middle text-center d-flex">
                                     <a href="/data/hospitals/{{$data->id}}/edit"
                                         class="text-secondary btn btn-sm text-sm font-weight-bold">Edit</a>
                                     <form action="/data/hospitals/{{$data->id}}" method="post">

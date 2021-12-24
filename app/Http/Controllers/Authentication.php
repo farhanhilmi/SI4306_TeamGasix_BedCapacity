@@ -27,6 +27,22 @@ class Authentication extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
+            // $request->session()->put('email', $request->email);
+            $user = User::where("email", $request->email)->first();
+
+            Session::put('email', $request->email);
+            Session::put('level', $user->level);
+            // $value = Session::get('variableSetOnPageA');
+
+            if ($user->level == 'admin') {
+                return redirect()->intended('/admin');
+            }
+            if ($user->level == 'staff') {
+                return redirect()->intended('/staff');
+            }
+            if ($user->level == 'patient') {
+                return redirect()->intended('/patient');
+            }
             return redirect()->intended('/pengelola')
                 ->withSuccess('Signed in');
         }

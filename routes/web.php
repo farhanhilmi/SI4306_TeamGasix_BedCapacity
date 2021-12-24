@@ -3,6 +3,7 @@
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PengelolaController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,13 @@ Route::get('/login', [MainController::class, 'login']);
 Route::get('/register', [MainController::class, 'register']);
 Route::post('/register/proses', [Authentication::class, 'prosesRegistration'])->name('prosesRegis');
 Route::post('/login/proses', [Authentication::class, 'prosesLogin'])->name('prosesLogin');
+Route::get('/signOut', [Authentication::class, 'signOut'])->name('signOut');
 
+// PENGELOLA
 Route::resource('data/pengelola', PengelolaController::class);
+
+// HOSPITAL
 Route::resource('data/hospitals', HospitalController::class);
+
+// PATIENT
+Route::resource('data/patient', PatientController::class);
