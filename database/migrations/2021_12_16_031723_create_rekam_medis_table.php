@@ -19,6 +19,7 @@ class CreateRekamMedisTable extends Migration
             $table->foreign('id_patient')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
             $table->longText('catatan');
             $table->string('dokumen');
+            $table->string('rekomendasi_jenis_rawat');
             $table->timestamps();
         });
     }
