@@ -16,10 +16,10 @@ class StaffController extends Controller
 
     public function index()
     {
-        $total_kamar = DB::table('kamar')->count();
-        $total_rawat_inap_saat_ini = DB::table('rawat')->where('jenis_rawat', 'Rawat Inap')->count();
+        $total_kamar = DB::table('kamar')->where('id_hospital', current_staff()->id_hospital)->count();
+        $total_kamar_terisi = DB::table('rawat')->where('jenis_rawat', 'Rawat Inap')->where('id_hospital', current_staff()->id_hospital)->count();
 
-        $total_kamar_terisi = $total_kamar - $total_rawat_inap_saat_ini;
+        // $total_kamar_terisi = $total_kamar - $total_rawat_inap_saat_ini;
 
         $total_rawat_jalan = DB::table('tagihan')->where('jenis_rawat', 'Rawat Jalan')->count();
         $total_rawat_inap = DB::table('tagihan')->where('jenis_rawat', 'Rawat Inap')->count();

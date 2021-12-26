@@ -15,7 +15,7 @@
             {{-- SIDE BAR ADMIN --}}
             @if (session()->get('level') == 'admin' )
             <li class="nav-item">
-                <a class="nav-link {{Request::is('data/dashboard*') ? 'active' : '' }}" href="/staff/dashboard">
+                <a class="nav-link {{Request::is('data/dashboard*') ? 'active' : '' }}" href="/data/dashboard">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
