@@ -39,7 +39,7 @@
           <div class="copyright text-center text-sm text-muted text-lg-start">
             © 2021,
             made with <i class="fa fa-heart"></i> by
-            <a class="font-weight-bold">Tim</a>
+            <a class="font-weight-bold">GasixTim</a>
             for better bed capacity management.
           </div>
         </div>

@@ -13,15 +13,15 @@
                             <form action="/data/pengelola" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Nama Pengelola</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Nama Pengelola" name="nama" required />
+                                    <label class="form-label">Nama Pengelola</label>
+                                    <input type="text" class="form-control" placeholder="Nama Pengelola" name="nama"
+                                        required />
                                     @if ($errors->has('nama'))
                                     <span class="text-danger">{{ $errors->first('nama') }}</span>
                                     @endif
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Rumah Sakit</label>
+                                    <label class="form-label">Rumah Sakit</label>
                                     <select class="form-select" name="id_hospital" aria-label="Default select example">
                                         <option disabled selected>Silakan Pilih Rumah Sakit Pengelola Bertugas</option>
                                         @foreach ($hospitals as $data)

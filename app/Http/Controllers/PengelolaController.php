@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Hash;
 
 class PengelolaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -59,8 +63,9 @@ class PengelolaController extends Controller
 
             $newAcc->email = $email;
             $newAcc->password = Hash::make($password);
-            $newAcc->level = 'staff';
+            // $newAcc->level = 'staff';
             $newAcc->save();
+            $newAcc->assignRole('staff');
 
             $newPengelola = new Pengelola();
             $newPengelola->id_users = $newAcc->id;
@@ -132,7 +137,14 @@ class PengelolaController extends Controller
      */
     public function destroy($id)
     {
-        Pengelola::find($id)->delete();
+        $pengelola = Pengelola::find($id);
+        User::find($pengelola->id_users)->delete();
+        // Pengelola::find($id)->delete();
+        // Pengelola::find($id)->delete();
+        // DB::transaction(function () use ($id) {
+        //     Pengelola::find($id)->delete();
+        //     User::find($id)->delete();
+        // });
         return redirect('/data/pengelola');
     }
 }

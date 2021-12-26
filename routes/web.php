@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PengelolaController;
+use App\Http\Controllers\Staff\KamarController;
+use App\Http\Controllers\Staff\StaffController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,17 +25,38 @@ use Illuminate\Support\Facades\Route;
 //     return view('index');
 // });
 Route::get('/', [MainController::class, 'index']);
-Route::get('/login', [MainController::class, 'login']);
+Route::get('/login', [MainController::class, 'login'])->name('login');
 Route::get('/register', [MainController::class, 'register']);
 Route::post('/register/proses', [Authentication::class, 'prosesRegistration'])->name('prosesRegis');
 Route::post('/login/proses', [Authentication::class, 'prosesLogin'])->name('prosesLogin');
 Route::get('/signOut', [Authentication::class, 'signOut'])->name('signOut');
 
-// PENGELOLA
-Route::resource('data/pengelola', PengelolaController::class);
+// !ADMIN
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('data/dashboard', [AdminController::class, 'index'])->name('dashboardAdmin');
 
-// HOSPITAL
-Route::resource('data/hospitals', HospitalController::class);
+    // PENGELOLA
+    Route::resource('data/pengelola', PengelolaController::class);
+    // HOSPITAL
+    Route::resource('data/hospitals', HospitalController::class);
+    // PATIENT
+    Route::resource('data/patient', PatientController::class);
+});
 
-// PATIENT
-Route::resource('data/patient', PatientController::class);
+
+// !STAFF ROUTE
+Route::group(['middleware' => ['role:staff']], function () {
+    Route::get('staff/dashboard', [StaffController::class, 'index']);
+    // KAMAR
+    Route::resource('staff/kamar', KamarController::class);
+});
+
+
+// !TEST
+// Route::get('admin-page', function () {
+//     return 'Halaman untuk Admin';
+// })->middleware('role:admin')->name('admin.page');
+
+// Route::get('user-page', function () {
+//     return 'Halaman untuk User';
+// })->middleware('role:user')->name('user.page');

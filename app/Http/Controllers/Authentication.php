@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Models\Pengelola;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -16,6 +18,37 @@ class Authentication extends Controller
     {
         return view('auth.login');
     }
+
+    public function authenticated(Request $request, $user)
+    {
+        if ($user->hasRole('admin')) {
+            Session::put('level', 'admin');
+            return redirect('data/dashboard');
+        }
+        if ($user->hasRole('staff')) {
+            Session::put('level', 'staff');
+            return redirect('staff/dashboard');
+        }
+        // if ($user->hasRole('admin')) {
+        //     return redirect('data/pengelola');
+        // }
+
+        return redirect('/login');
+    }
+
+    // protected function attemptLogin(Request $request, $user)
+    // {
+    //     if ($this->guard()->attempt(
+    //         $this->credentials($request),
+    //         $request->filled('remember')
+    //     )) { // Credential auth was successful
+    //         // Get user model
+    //         // $user = Auth::user();
+    //         return $user->hasRole([2, 3]); // Check if user has role ids 2 or 3
+    //     }
+
+    //     return false;
+    // }
 
 
     public function prosesLogin(Request $request)
@@ -31,20 +64,7 @@ class Authentication extends Controller
             $user = User::where("email", $request->email)->first();
 
             Session::put('email', $request->email);
-            Session::put('level', $user->level);
-            // $value = Session::get('variableSetOnPageA');
-
-            if ($user->level == 'admin') {
-                return redirect()->intended('/admin');
-            }
-            if ($user->level == 'staff') {
-                return redirect()->intended('/staff');
-            }
-            if ($user->level == 'patient') {
-                return redirect()->intended('/patient');
-            }
-            return redirect()->intended('/pengelola')
-                ->withSuccess('Signed in');
+            return $this->authenticated($request, $user);
         }
 
         return redirect("/login")->withSuccess('Login details are not valid');
@@ -78,23 +98,46 @@ class Authentication extends Controller
 
     public function createPatient(array $data)
     {
-        $newUser = User::create([
-            'email' => $data['email'],
-            'password' => Hash::make($data['password'])
-        ]);
+        // $newUser = User::create([
+        //     'email' => $data['email'],
+        //     'password' => Hash::make($data['password'])
+        // ]);
+        // $newUser->assignRole('patient');
 
-        if ($newUser) {
+        // if ($newUser) {
+        //     $patient_id = generatePatientID();
+        //     return Patient::create([
+        //         'id' => $patient_id,
+        //         'id_users' => $newUser->id,
+        //         'nama' => $data['name'],
+        //         'email' => $data['email'],
+        //         'nik' => $data['nik'],
+        //         'alamat' => $data['alamat'],
+        //         'no_hp' => $data['nohp'],
+        //     ]);
+        // }
+        DB::transaction(function () use ($data) { // Start the transaction
+            $newUser = new User();
+
+            $email = $data['email'];
+            $password = $data['password'];
+
+            $newUser->email = $email;
+            $newUser->password = Hash::make($password);
+            $newUser->save();
+            $newUser->assignRole('patient');
+
             $patient_id = generatePatientID();
-            return Patient::create([
-                'id' => $patient_id,
-                'id_users' => $newUser->id,
-                'nama' => $data['name'],
-                'email' => $data['email'],
-                'nik' => $data['nik'],
-                'alamat' => $data['alamat'],
-                'no_hp' => $data['nohp'],
-            ]);
-        }
+            $pengelola = new Patient();
+            $pengelola->patient_id = $patient_id;
+            $pengelola->id_users = $$newUser->id;
+            $pengelola->nama = $data['name'];
+            $pengelola->email = $data['email'];
+            $pengelola->nik = $data['nik'];
+            $pengelola->alamat = $data['alamat'];
+            $pengelola->no_hp = $data['no_hp'];
+            $pengelola->save();
+        });
     }
 
 

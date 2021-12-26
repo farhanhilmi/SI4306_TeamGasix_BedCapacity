@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Hospital;
 use App\Models\Patient;
 
 function patientIdExist($id)
@@ -16,4 +17,15 @@ function generatePatientID()
     }
 
     return $number;
+}
+
+function rupiah($angka)
+{
+    $hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.');
+    return $hasil_rupiah;
+}
+
+function current_staff()
+{
+    return Hospital::join('pengelola', 'pengelola.id_hospital', '=', 'hospitals.id')->where('id_users', Auth()->id())->get(['pengelola.*', 'hospitals.nama AS rs'])->first();
 }
