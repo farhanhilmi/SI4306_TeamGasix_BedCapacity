@@ -19,7 +19,7 @@
                                     <select class="form-select" name="kelas" aria-label="Default select example">
                                         <option selected disabled>Pilih Kelas</option>
                                         <option value="VVIP">VVIP</option>
-                                        <option value="VVIP">VVIP</option>
+                                        <option value="VIP">VIP</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>

@@ -7,7 +7,9 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PengelolaController;
 use App\Http\Controllers\Staff\KamarController;
+use App\Http\Controllers\Staff\PesanKamarController;
 use App\Http\Controllers\Staff\StaffController;
+use App\Http\Controllers\Staff\TagihanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +51,8 @@ Route::group(['middleware' => ['role:staff']], function () {
     Route::get('staff/dashboard', [StaffController::class, 'index']);
     // KAMAR
     Route::resource('staff/kamar', KamarController::class);
+    Route::resource('staff/pesan_kamar', PesanKamarController::class);
+    Route::resource('staff/tagihan', TagihanController::class);
 });
 
 
