@@ -51,6 +51,8 @@ Route::group(['middleware' => ['role:admin']], function () {
 Route::group(['middleware' => ['role:staff']], function () {
     Route::get('staff/dashboard', [StaffController::class, 'index']);
     Route::get('staff/patient', [StaffController::class, 'get_patients']);
+    Route::get('staff/data_pesan_obat', [StaffController::class, 'data_pesan_obat']);
+    Route::post('staff/edit_pesan_obat', [StaffController::class, 'update_pesan_obat']);
     // KAMAR
     Route::resource('staff/kamar', KamarController::class);
     Route::resource('staff/pesan_kamar', PesanKamarController::class);
