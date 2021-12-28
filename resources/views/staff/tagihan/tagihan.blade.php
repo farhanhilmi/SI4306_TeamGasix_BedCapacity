@@ -71,16 +71,47 @@
                                     <p class="text-xs font-weight-bold mb-0">{{rupiah($data->biaya_total)}}</p>
                                 </td>
                                 <td class="align-middle text-center justify-content-center d-flex">
-                                    <a href="/staff/tagihan/{{$data->id}}/edit"
-                                        class="text-secondary btn btn-sm text-sm font-weight-bold">Edit</a>
-                                    {{-- <form action="/staff/pesan_kamar/{{$data->id}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="text-danger btn btn-sm text-sm font-weight-bold">Delete</button>
-                                    </form> --}}
+                                    {{-- <a href="/staff/tagihan/{{$data->id}}/edit"
+                                        class="text-secondary btn btn-sm text-sm font-weight-bold">Edit</a> --}}
+                                    <button type="button" class="btn bg-gradient-dark btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal{{$data->id}}">
+                                        Edit
+                                    </button>
+
                                 </td>
                             </tr>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{$data->id}}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form action="/staff/tagihan/{{$data->id}}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+                                                <select class="form-select" name="status"
+                                                    aria-label="Default select example">
+                                                    <option selected disabled>Status</option>
+                                                    <option value="Sudah Bayar">Sudah Bayar</option>
+                                                    <option value="Belum Bayar">Belum Bayar</option>
+                                                    <option value="Dalam Perawatan">Dalam Perawatan</option>
+                                                </select>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-sm"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn bg-gradient-dark btn-sm">Save
+                                                    changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             @endforeach
                             {{-- @endif --}}
                         </tbody>

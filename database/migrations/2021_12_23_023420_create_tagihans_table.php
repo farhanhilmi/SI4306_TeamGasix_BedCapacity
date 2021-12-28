@@ -28,7 +28,7 @@ class CreateTagihansTable extends Migration
             $table->dateTime('check_in');
             $table->dateTime('check_out')->nullable();
             $table->string('biaya_total')->nullable();
-            $table->string('status')->default('Belum Bayar');
+            $table->string('status')->default('Dalam Perawatan');
             $table->timestamps();
         });
     }

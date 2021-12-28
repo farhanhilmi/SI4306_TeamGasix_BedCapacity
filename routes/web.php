@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\patient\ControllerPasien;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PengelolaController;
 use App\Http\Controllers\Staff\KamarController;
@@ -49,10 +50,20 @@ Route::group(['middleware' => ['role:admin']], function () {
 // !STAFF ROUTE
 Route::group(['middleware' => ['role:staff']], function () {
     Route::get('staff/dashboard', [StaffController::class, 'index']);
+    Route::get('staff/patient', [StaffController::class, 'get_patients']);
     // KAMAR
     Route::resource('staff/kamar', KamarController::class);
     Route::resource('staff/pesan_kamar', PesanKamarController::class);
     Route::resource('staff/tagihan', TagihanController::class);
+});
+
+// !PATIENT ROUTE
+Route::group(['middleware' => ['role:patient']], function () {
+    Route::get('patient/dashboard', [ControllerPasien::class, 'index']);
+    Route::get('patient/booking', [ControllerPasien::class, 'create']);
+    Route::post('patient/booking/kamar', [ControllerPasien::class, 'pilih_kamar']);
+    Route::post('patient/booking/kamar/booknow', [ControllerPasien::class, 'store']);
+    Route::get('patient/data_booking', [ControllerPasien::class, 'data_booking']);
 });
 
 

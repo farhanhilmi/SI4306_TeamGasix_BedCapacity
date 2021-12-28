@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Models\Patient;
 use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,5 +30,13 @@ class StaffController extends Controller
         $jalan = Tagihan::where('jenis_rawat', 'Rawat Jalan')->orderBy('check_in')->get();
 
         return view('staff/dashboard', compact('page', 'inap', 'jalan', 'total_kamar', 'total_kamar_terisi', 'total_rawat_jalan', 'total_rawat_inap'));
+    }
+
+    public function get_patients()
+    {
+        $pengelola = current_staff();
+        $page = $pengelola->rs . ' | Data Pasien';
+        $patients = Patient::orderBy('nama')->get();
+        return view('staff/patients', compact('page', 'patients'));
     }
 }

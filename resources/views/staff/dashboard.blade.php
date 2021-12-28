@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="numbers">
-                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Bed</p>
+                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Jenis Kamar</p>
                             <h5 class="font-weight-bolder mb-0">
                                 {{$total_kamar}}
                             </h5>

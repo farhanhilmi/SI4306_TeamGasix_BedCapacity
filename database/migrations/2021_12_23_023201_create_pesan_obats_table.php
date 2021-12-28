@@ -18,8 +18,8 @@ class CreatePesanObatsTable extends Migration
             $table->bigInteger('id_patient')->unsigned()->index()->nullable();
             $table->foreign('id_patient')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
             // $table->timestamp('check_in')->useCurrent = true;
-            $table->longText('jenis_obat');
-            $table->string('harga');
+            $table->longText('jenis_obat')->nullable();
+            $table->string('harga')->default('0');
             $table->timestamps();
         });
     }

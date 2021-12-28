@@ -91,8 +91,8 @@
                                         <div class="mb-3">
                                             <input type="number" class="form-control" placeholder="No. HP" name="nohp"
                                                 required>
-                                            @if ($errors->has('no_hp'))
-                                            <span class="text-danger">{{ $errors->first('no_hp') }}</span>
+                                            @if ($errors->has('nohp'))
+                                            <span class="text-danger">{{ $errors->first('nohp') }}</span>
                                             @endif
                                         </div>
                                         <label>Alamat</label>

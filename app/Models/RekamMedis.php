@@ -9,5 +9,5 @@ class RekamMedis extends Model
 {
     use HasFactory;
     protected $table = 'rekam_medis';
-    protected $guarded = ['id'];
+    protected $guarded = [];
 }

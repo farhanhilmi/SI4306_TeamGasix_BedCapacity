@@ -29,6 +29,10 @@ class Authentication extends Controller
             Session::put('level', 'staff');
             return redirect('staff/dashboard');
         }
+        if ($user->hasRole('patient')) {
+            Session::put('level', 'patient');
+            return redirect('patient/dashboard');
+        }
         // if ($user->hasRole('admin')) {
         //     return redirect('data/pengelola');
         // }
@@ -92,7 +96,7 @@ class Authentication extends Controller
         $data = $request->all();
         $check = $this->createPatient($data);
 
-        return redirect("admin.pengelola")->withSuccess('You have signed-in');
+        return redirect("/login")->withSuccess('You have signed-in');
     }
 
 
@@ -128,15 +132,15 @@ class Authentication extends Controller
             $newUser->assignRole('patient');
 
             $patient_id = generatePatientID();
-            $pengelola = new Patient();
-            $pengelola->patient_id = $patient_id;
-            $pengelola->id_users = $$newUser->id;
-            $pengelola->nama = $data['name'];
-            $pengelola->email = $data['email'];
-            $pengelola->nik = $data['nik'];
-            $pengelola->alamat = $data['alamat'];
-            $pengelola->no_hp = $data['no_hp'];
-            $pengelola->save();
+            $patient = new Patient();
+            $patient->id = $patient_id;
+            $patient->id_users = $newUser->id;
+            $patient->nama = $data['name'];
+            $patient->email = $data['email'];
+            $patient->nik = $data['nik'];
+            $patient->alamat = $data['alamat'];
+            $patient->no_hp = $data['nohp'];
+            $patient->save();
         });
     }
 

@@ -17,7 +17,7 @@ class TagihanController extends Controller
     {
         $pengelola = current_staff();
         $page = $pengelola->rs . ' | Data Tagihan';
-        $tagihan = Tagihan::join('patients', 'tagihan.id_patient', '=', 'patients.id')->join('pesan_obat', 'pesan_obat.id', '=', 'tagihan.id_pesan_obat')->join('pesan_kamar', 'tagihan.id_pesan_kamar', '=', 'pesan_kamar.id')->where('pesan_kamar.id_hospital', $pengelola->id_hospital)->get(['tagihan.*', 'patients.nama AS nama_patient, patients.id AS id_patient', 'pesan_obat.harga AS harga_obat']);
+        $tagihan = Tagihan::join('patients', 'tagihan.id_patient', '=', 'patients.id')->join('pesan_obat', 'pesan_obat.id', '=', 'tagihan.id_pesan_obat')->join('pesan_kamar', 'tagihan.id_pesan_kamar', '=', 'pesan_kamar.id')->where('pesan_kamar.id_hospital', $pengelola->id_hospital)->get(['tagihan.*', 'patients.nama AS nama_patient', 'patients.id AS id_patient', 'pesan_obat.harga AS harga_obat']);
         return view('staff.tagihan.tagihan', compact('page', 'tagihan'));
     }
 
@@ -73,7 +73,17 @@ class TagihanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        $status = $request->status;
+
+        Tagihan::find($id)->update([
+            'status' => $status
+        ]);
+
+        return redirect('/staff/tagihan');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use App\Models\Hospital;
 use App\Models\Patient;
+use Illuminate\Support\Facades\Auth;
 
 function patientIdExist($id)
 {
@@ -28,4 +29,10 @@ function rupiah($angka)
 function current_staff()
 {
     return Hospital::join('pengelola', 'pengelola.id_hospital', '=', 'hospitals.id')->where('id_users', Auth()->id())->get(['pengelola.*', 'hospitals.nama AS rs'])->first();
+}
+
+function current_pasien()
+{
+    return Patient::where('id_users', Auth()->id())->first();
+    // return Patient::join('users', 'users.id', '=', 'patients.id_users')->where('id_users', Auth()->id())->get(['patients.*'])->first();
 }

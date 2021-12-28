@@ -17,7 +17,7 @@ class PesanKamarController extends Controller
     {
         $pengelola = current_staff();
         $page = $pengelola->rs . ' | Data Pesan Kamar';
-        $pesan_kamar = Patient::join('pesan_kamar', 'pesan_kamar.id_patient', '=', 'patients.id')->join('kamar', 'kamar.id', '=', 'pesan_kamar.id_kamar')->join('tagihan', 'tagihan.id_pesan_kamar', '=', 'pesan_kamar.id')->where('pesan_kamar.id_hospital', $pengelola->id_hospital)->get(['pesan_kamar.*', 'patients.nama AS nama_patient, patients.id AS id_patient, kamar.nama AS nama_kamar, kamar.kelas AS kelas_kamar', 'tagihan.status AS status, tagihan.check_in AS check_in, tagihan.check_out AS check_out']);
+        $pesan_kamar = Patient::join('pesan_kamar', 'pesan_kamar.id_patient', '=', 'patients.id')->join('kamar', 'kamar.id', '=', 'pesan_kamar.id_kamar')->join('tagihan', 'tagihan.id_pesan_kamar', '=', 'pesan_kamar.id')->where('pesan_kamar.id_hospital', $pengelola->id_hospital)->get(['pesan_kamar.*', 'patients.nama AS nama_patient', 'patients.id AS id_patient', 'kamar.nama AS nama_kamar', 'kamar.kelas AS kelas_kamar', 'tagihan.status AS status', 'tagihan.check_in AS check_in', 'tagihan.check_out AS check_out']);
         return view('staff.pesan_kamar.pesan_kamar', compact('page', 'pesan_kamar'));
     }
 
