@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hospital;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class HospitalController extends Controller
 {
@@ -44,13 +45,23 @@ class HospitalController extends Controller
      */
     public function store(Request $request)
     {
-        Hospital::create([
-            'nama' => $request->nama,
-            'alamat' => $request->alamat,
-            'email' => $request->email,
-            'no_telp_rs' => $request->no_telp_rs,
-            'maps' => $request->maps,
-        ]);
+        $imgName = $request->image;
+        if ($request->image) {
+            $imgName = $request->image->getClientOriginalName() . '-' . time()
+                . '.' . $request->image->extension();
+            $hospital = Hospital::create([
+                'nama' => $request->nama,
+                'alamat' => $request->alamat,
+                'email' => $request->email,
+                'no_telp_rs' => $request->no_telp_rs,
+                'maps' => $request->maps,
+                'gambar' => $imgName
+            ]);
+
+            if ($hospital) {
+                $request->image->move(public_path('images/hospital/' . $request->nama), $imgName);
+            }
+        }
 
         return redirect('/data/hospitals');
     }
@@ -88,14 +99,38 @@ class HospitalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Hospital::find($id)->update([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'alamat' => $request->alamat,
-            'email' => $request->email,
-            'no_telp_rs' => $request->no_telp_rs,
-            'maps' => $request->maps,
-        ]);
+        $imgName = $request->image;
+        if ($request->image) {
+            $imgName = $request->image->getClientOriginalName() . '-' . time()
+                . '.' . $request->image->extension();
+
+            $rs = Hospital::find($id);
+            $img_path = "images/hospital/" . $rs->nama . "/" . $rs->gambar;
+            if (File::exists($img_path)) {
+                File::delete($img_path);
+            }
+
+            $hospital = Hospital::find($id)->update([
+                'nama' => $request->nama,
+                'email' => $request->email,
+                'alamat' => $request->alamat,
+                'email' => $request->email,
+                'no_telp_rs' => $request->no_telp_rs,
+                'gambar' => $imgName
+            ]);
+
+            if ($hospital) {
+                $request->image->move(public_path('images/hospital/' . $request->nama), $imgName);
+            }
+        } else {
+            Hospital::find($id)->update([
+                'nama' => $request->nama,
+                'email' => $request->email,
+                'alamat' => $request->alamat,
+                'email' => $request->email,
+                'no_telp_rs' => $request->no_telp_rs
+            ]);
+        }
 
         return redirect('/data/hospitals');
     }

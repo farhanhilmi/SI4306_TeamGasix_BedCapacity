@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class="card" style="width: 18rem;">
+                <div class="card shadow" style="width: 18rem;">
                     <img src="/images/kamar/{{$hospital->nama}}/{{$data->gambar}}" class="card-img-top" alt="...">
                     <div class="card-body" style="height: 330px">
                         <h6 class="card-title">Kelas {{$data->kelas}}</h6>

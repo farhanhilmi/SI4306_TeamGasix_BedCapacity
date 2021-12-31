@@ -10,7 +10,8 @@
                 <div class="card-body px-0 pt-4 pb-2">
                     <div class="table-responsive p-0">
                         <div class="container">
-                            <form action="/data/hospitals/{{$hospital->id}}" method="POST">
+                            <form action="/data/hospitals/{{$hospital->id}}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
@@ -38,6 +39,10 @@
                                     <label for="exampleInputEmail1" class="form-label">Google Maps</label>
                                     <textarea type="text" class="form-control" id="exampleInputEmail1"
                                         placeholder="Maps link" name="maps" required>{{$hospital->maps}}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Gambar Rumah Sakit</label>
+                                    <input type="file" class="form-control" name="image" required />
                                 </div>
                                 <button type="submit" class="btn btn-primary">
                                     Submit
