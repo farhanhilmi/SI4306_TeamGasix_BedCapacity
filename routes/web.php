@@ -37,6 +37,8 @@ Route::get('/signOut', [Authentication::class, 'signOut'])->name('signOut');
 // !ADMIN
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('data/dashboard', [AdminController::class, 'index'])->name('dashboardAdmin');
+    // Rekam Medis
+    Route::get('data/rekammedis', [PatientController::class, 'rekam_medis']);
 
     // PENGELOLA
     Route::resource('data/pengelola', PengelolaController::class);
@@ -66,6 +68,10 @@ Route::group(['middleware' => ['role:patient']], function () {
     Route::post('patient/booking/kamar', [ControllerPasien::class, 'pilih_kamar']);
     Route::post('patient/booking/kamar/booknow', [ControllerPasien::class, 'store']);
     Route::get('patient/data_booking', [ControllerPasien::class, 'data_booking']);
+
+    // Input Rekam medis
+    Route::get('patient/create_rekam_medis', [ControllerPasien::class, 'create_rekam_medis']);
+    Route::post('patient/store_rekam_medis', [ControllerPasien::class, 'store_rekam_medis']);
 });
 
 

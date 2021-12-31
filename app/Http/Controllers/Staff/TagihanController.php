@@ -80,7 +80,8 @@ class TagihanController extends Controller
         $status = $request->status;
 
         Tagihan::find($id)->update([
-            'status' => $status
+            'status' => $status,
+            'check_out' => date("Y-m-d")
         ]);
 
         return redirect('/staff/tagihan');

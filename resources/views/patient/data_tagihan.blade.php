@@ -14,6 +14,9 @@
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID
                                 </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID
+                                    Tagihan
+                                </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama
                                     Kamar
                                 </th>
@@ -53,6 +56,9 @@
                                     </div>
                                 </td>
                                 <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{$data->id}}</p>
+                                </td>
+                                <td>
                                     <p class="text-xs font-weight-bold mb-0">{{$data->nama_kamar}}</p>
                                 </td>
                                 <td>
@@ -62,7 +68,12 @@
                                     <p class="text-xs font-weight-bold mb-0">{{rupiah($data->harga_obat)}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                    <p class="text-xs font-weight-bold mb-0">{{$data->check_in}} - {{$data->check_out}}
+                                    <p class="text-xs font-weight-bold mb-0">{{date('d-m-Y',
+                                        strtotime($data->check_in))}} - @if ($data->check_out)
+                                        {{date('d-m-Y', strtotime($data->check_out))}}
+                                        @else
+                                        Saat ini
+                                        @endif
                                     </p>
 
                                 </td>

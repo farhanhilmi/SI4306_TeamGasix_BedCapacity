@@ -2,6 +2,8 @@
 
 use App\Models\Hospital;
 use App\Models\Patient;
+use App\Models\RekamMedis;
+use App\Models\Tagihan;
 use Illuminate\Support\Facades\Auth;
 
 function patientIdExist($id)
@@ -15,6 +17,17 @@ function generatePatientID()
 
     if (patientIdExist($number)) {
         return generatePatientID();
+    }
+
+    return $number;
+}
+
+function generateIDTagihan()
+{
+    $number = mt_rand(10000000, 99999999);
+    $tagihan =  Tagihan::where('id',  $number)->exists();
+    if (patientIdExist($tagihan)) {
+        return generateIDTagihan();
     }
 
     return $number;
@@ -35,4 +48,21 @@ function current_pasien()
 {
     return Patient::where('id_users', Auth()->id())->first();
     // return Patient::join('users', 'users.id', '=', 'patients.id_users')->where('id_users', Auth()->id())->get(['patients.*'])->first();
+}
+
+function get_rekam_medis_patient()
+{
+    return RekamMedis::where('id_patient', current_pasien()->id)->first();
+}
+
+function pasien_layak_inap()
+{
+    $rekam_medis = get_rekam_medis_patient();
+    if ($rekam_medis) {
+        if ($rekam_medis->rekomendasi_jenis_rawat == "Rawat Inap") {
+            return true;
+        }
+        return false;
+    }
+    return false;
 }

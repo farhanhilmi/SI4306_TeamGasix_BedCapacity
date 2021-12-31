@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Models\RekamMedis;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -21,6 +22,13 @@ class PatientController extends Controller
         $patients = Patient::orderBy('nama')->get();
         $page = 'Data Patients';
         return view('admin.patient.patient', compact('patients', 'page'));
+    }
+
+    public function rekam_medis()
+    {
+        $rekam_medis = RekamMedis::join('patients', 'patients.id', 'rekam_medis.id_patient')->get(['rekam_medis.*', 'patients.nama AS nama_patient']);
+        $page = 'Data Rekam Medis';
+        return view('admin.patient.rekam_medis', compact('rekam_medis', 'page'));
     }
 
     /**
@@ -75,7 +83,10 @@ class PatientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        RekamMedis::find($id)->update([
+            'rekomendasi_jenis_rawat' => $request->jenis_rawat,
+        ]);
+        return redirect('/data/rekammedis');
     }
 
     /**

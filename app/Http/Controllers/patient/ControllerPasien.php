@@ -8,6 +8,7 @@ use App\Models\Kamar;
 use App\Models\PesanKamar;
 use App\Models\PesanObat;
 use App\Models\Rawat;
+use App\Models\RekamMedis;
 use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,8 @@ class ControllerPasien extends Controller
     {
         $user = current_pasien();
         $page = $user->nama . ' | Dashboard';
-        return view('patient/dashboard', compact('page'));
+        $hospital = Hospital::orderBy('nama')->get();
+        return view('patient/dashboard', compact('page', 'hospital'));
     }
 
     /**
@@ -35,13 +37,41 @@ class ControllerPasien extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $hospital = Hospital::orderBy('nama')->get();
+    // public function create()
+    // {
+    //     $hospital = Hospital::orderBy('nama')->get();
 
+    //     $user = current_pasien();
+    //     $page = $user->nama . ' | Pilih Rumah Sakit';
+    //     return view('patient/booking_kamar/pilih_hospital', compact('page', 'hospital'));
+    // }
+
+    public function create_rekam_medis()
+    {
         $user = current_pasien();
-        $page = $user->nama . ' | Pilih Rumah Sakit';
-        return view('patient/booking_kamar/pilih_hospital', compact('page', 'hospital'));
+        $page = $user->nama . ' | Submit Rekam Medis';
+        return view('patient/input_rekam_medis', compact('page'));
+    }
+
+    public function store_rekam_medis(Request $request)
+    {
+        $pasien = current_pasien();
+        $imgName = $request->image;
+        if ($request->image) {
+            $imgName = $request->image->getClientOriginalName() . '-' . time()
+                . '.' . $request->image->extension();
+            $rekam_medis = RekamMedis::create([
+                'id_patient' => $pasien->id,
+                'catatan' => $request->catatan,
+                'dokumen' => $imgName
+            ]);
+
+            if ($rekam_medis) {
+                $request->image->move(public_path('images/rekam-medis/' . $pasien->id), $imgName);
+            }
+        }
+
+        return redirect('patient/dashboard');
     }
 
     public function pilih_kamar(Request $request)
@@ -94,6 +124,7 @@ class ControllerPasien extends Controller
             $kamar->save();
 
             $tagihan = new Tagihan();
+            $tagihan->id = generateIDTagihan();
             $tagihan->id_patient = current_pasien()->id;
             $tagihan->id_pesan_kamar = $pesan_kamar->id;
             $tagihan->jenis_rawat = 'Rawat Inap';

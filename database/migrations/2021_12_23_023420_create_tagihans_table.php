@@ -14,7 +14,7 @@ class CreateTagihansTable extends Migration
     public function up()
     {
         Schema::create('tagihan', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('id')->unsigned()->primary();
             $table->bigInteger('id_pesan_kamar')->unsigned()->index()->nullable();
             $table->foreign('id_pesan_kamar')->references('id')->on('pesan_kamar')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('id_patient')->unsigned()->index()->nullable();
