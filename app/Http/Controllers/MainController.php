@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
     public function index()
     {
-        return view('index');
+        $testimonials = Testimonial::limit(3)->get();
+        return view('index', compact('testimonials'));
     }
 
     public function login()

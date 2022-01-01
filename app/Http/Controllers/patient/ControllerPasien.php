@@ -10,6 +10,7 @@ use App\Models\PesanObat;
 use App\Models\Rawat;
 use App\Models\RekamMedis;
 use App\Models\Tagihan;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -58,8 +59,7 @@ class ControllerPasien extends Controller
         $pasien = current_pasien();
         $imgName = $request->image;
         if ($request->image) {
-            $imgName = $request->image->getClientOriginalName() . '-' . time()
-                . '.' . $request->image->extension();
+            $imgName = time() . $request->image->getClientOriginalName();
             $rekam_medis = RekamMedis::create([
                 'id_patient' => $pasien->id,
                 'catatan' => $request->catatan,
@@ -70,6 +70,17 @@ class ControllerPasien extends Controller
                 $request->image->move(public_path('images/rekam-medis/' . $pasien->id), $imgName);
             }
         }
+
+        return redirect('patient/dashboard');
+    }
+
+    public function store_testimonial(Request $request)
+    {
+        Testimonial::create([
+            'nama' => $request->nama,
+            'id_patient' => current_pasien()->id,
+            'testimonial' => $request->testimonial,
+        ]);
 
         return redirect('patient/dashboard');
     }

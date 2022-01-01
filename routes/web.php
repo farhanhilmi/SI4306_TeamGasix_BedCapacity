@@ -76,6 +76,9 @@ Route::group(['middleware' => ['role:patient']], function () {
 
     Route::get('patient/checkout/{id}/', [ControllerPembayaran::class, 'create']);
     Route::get('patient/bayar/{id}/', [ControllerPembayaran::class, 'bayar']);
+
+    // Testi
+    Route::post('patient/testimonial', [ControllerPasien::class, 'store_testimonial']);
 });
 
 

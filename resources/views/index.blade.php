@@ -195,73 +195,22 @@
     </section><!-- End Services Section -->
 
     <!-- ======= Appointment Section ======= -->
-    <section id="appointment" class="appointment section-bg">
+    <section id="feedback" class="appointment section-bg">
         <div class="container">
-
             <div class="section-title">
-                <h2>Make an Appointment</h2>
-                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit in iste officiis commodi quidem hic quas.</p>
+                <h2>Testimonial</h2>
             </div>
-
-            <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
-                <div class="row">
-                    <div class="col-md-4 form-group">
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"
-                            data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                        <div class="validate"></div>
-                    </div>
-                    <div class="col-md-4 form-group mt-3 mt-md-0">
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Your Email"
-                            data-rule="email" data-msg="Please enter a valid email">
-                        <div class="validate"></div>
-                    </div>
-                    <div class="col-md-4 form-group mt-3 mt-md-0">
-                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone"
-                            data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                        <div class="validate"></div>
+            <div class="row g-4 row-cols-1 row-cols-md-3 justify-content-center">
+                @foreach ($testimonials as $data)
+                <div class="col">
+                    <div class="card d-flex flex-column justify-content-between align-items-cente p-4 shadow"
+                        style="border-radius: 20px; border:none; height: 200px;">
+                        <h6 class="fw-bold" style="color: #2C4964; text-align:center;">"{{$data->testimonial}}"</h6>
+                        <p class="text-center">~{{$data->nama}}~</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4 form-group mt-3">
-                        <input type="datetime" name="date" class="form-control datepicker" id="date"
-                            placeholder="Appointment Date" data-rule="minlen:4"
-                            data-msg="Please enter at least 4 chars">
-                        <div class="validate"></div>
-                    </div>
-                    <div class="col-md-4 form-group mt-3">
-                        <select name="hospital" id="hospital" class="form-select">
-                            <option value="">Select Hospital</option>
-                            <option value="Hospital 1">Hospital 1</option>
-                            <option value="Hospital 2">Hospital 2</option>
-                            <option value="Hospital 3">Hospital 3</option>
-                        </select>
-                        <div class="validate"></div>
-                    </div>
-                    <div class="col-md-4 form-group mt-3">
-                        <select name="room" id="room" class="form-select">
-                            <option value="">Select Room</option>
-                            <option value="Room 1">Room 1</option>
-                            <option value="Room 2">Room 2</option>
-                            <option value="Room 3">Room 3</option>
-                        </select>
-                        <div class="validate"></div>
-                    </div>
-                </div>
-
-                <div class="form-group mt-3">
-                    <textarea class="form-control" name="message" rows="5" placeholder="Message (Optional)"></textarea>
-                    <div class="validate"></div>
-                </div>
-                <div class="mb-3">
-                    <div class="loading">Loading</div>
-                    <div class="error-message"></div>
-                    <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
-                </div>
-                <div class="text-center"><button type="submit">Make an Appointment</button></div>
-            </form>
-
+                @endforeach
+            </div>
         </div>
     </section><!-- End Appointment Section -->
 

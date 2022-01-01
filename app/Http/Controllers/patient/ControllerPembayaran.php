@@ -4,6 +4,7 @@ namespace App\Http\Controllers\patient;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tagihan;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class ControllerPembayaran extends Controller
@@ -35,8 +36,10 @@ class ControllerPembayaran extends Controller
     {
         $user = current_pasien();
         $tagihan = Tagihan::join('patients', 'tagihan.id_patient', '=', 'patients.id')->join('pesan_obat', 'pesan_obat.id', '=', 'tagihan.id_pesan_obat')->join('pesan_kamar', 'tagihan.id_pesan_kamar', '=', 'pesan_kamar.id')->join('kamar', 'kamar.id', '=', 'pesan_kamar.id_kamar')->join('hospitals', 'hospitals.id', 'pesan_kamar.id_hospital')->where('tagihan.id', $id)->get(['tagihan.*', 'patients.nama AS nama_patient, patients.id AS id_patient', 'pesan_obat.harga AS harga_obat', 'pesan_obat.jenis_obat AS nama_obat', 'kamar.nama AS nama_kamar', 'kamar.kelas AS kelas_kamar', 'hospitals.nama AS rs'])->first();
+
         $page = $user->nama . ' | Pembayaran';
-        return view('patient/bayar/proses-bayar', compact('page', 'tagihan'));
+        $testimonial = Testimonial::where('id_patient', $user->id)->first();
+        return view('patient/bayar/proses-bayar', compact('page', 'tagihan', 'testimonial'));
     }
 
     /**
