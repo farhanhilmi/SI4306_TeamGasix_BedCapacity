@@ -79,10 +79,16 @@ class TagihanController extends Controller
 
         $status = $request->status;
 
-        Tagihan::find($id)->update([
-            'status' => $status,
-            'check_out' => date("Y-m-d")
-        ]);
+        if ($status == "Belum Bayar") {
+            Tagihan::find($id)->update([
+                'status' => $status,
+                'check_out' => date("Y-m-d")
+            ]);
+        } else {
+            Tagihan::find($id)->update([
+                'status' => $status
+            ]);
+        }
 
         return redirect('/staff/tagihan');
     }

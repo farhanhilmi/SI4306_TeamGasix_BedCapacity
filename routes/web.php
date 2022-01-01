@@ -75,6 +75,7 @@ Route::group(['middleware' => ['role:patient']], function () {
     Route::post('patient/store_rekam_medis', [ControllerPasien::class, 'store_rekam_medis']);
 
     Route::get('patient/checkout/{id}/', [ControllerPembayaran::class, 'create']);
+    Route::get('patient/bayar/{id}/', [ControllerPembayaran::class, 'bayar']);
 });
 
 
