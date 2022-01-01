@@ -123,6 +123,8 @@ class ControllerPasien extends Controller
             $kamar->qty = $kamar->qty - 1;
             $kamar->save();
 
+            $biaya_kamar = $request->biaya_total;
+
             $tagihan = new Tagihan();
             $tagihan->id = generateIDTagihan();
             $tagihan->id_patient = current_pasien()->id;
@@ -130,7 +132,8 @@ class ControllerPasien extends Controller
             $tagihan->jenis_rawat = 'Rawat Inap';
             $tagihan->id_pesan_obat = $pesan_obat->id;
             $tagihan->check_in = $request->check_in;
-            $tagihan->biaya_total = $request->biaya_total;
+            $tagihan->biaya_kamar = $biaya_kamar;
+            $tagihan->biaya_total = $biaya_kamar;
             $tagihan->save();
         });
 

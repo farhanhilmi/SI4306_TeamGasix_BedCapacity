@@ -5,6 +5,7 @@ use App\Http\Controllers\Authentication;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\patient\ControllerPasien;
+use App\Http\Controllers\patient\ControllerPembayaran;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PengelolaController;
 use App\Http\Controllers\Staff\KamarController;
@@ -72,6 +73,8 @@ Route::group(['middleware' => ['role:patient']], function () {
     // Input Rekam medis
     Route::get('patient/create_rekam_medis', [ControllerPasien::class, 'create_rekam_medis']);
     Route::post('patient/store_rekam_medis', [ControllerPasien::class, 'store_rekam_medis']);
+
+    Route::get('patient/checkout/{id}/', [ControllerPembayaran::class, 'create']);
 });
 
 

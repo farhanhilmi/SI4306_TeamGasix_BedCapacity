@@ -55,14 +55,12 @@ class StaffController extends Controller
             'jenis_obat' => 'required',
         ]);
 
-
-
         DB::transaction(function () use ($request) { // Start the transaction
             $harga = $request->harga;
             $jenis_obat = $request->jenis_obat;
 
             $tagihan = Tagihan::find($request->id_tagihan);
-            $tagihan->biaya_total = strval(intval($tagihan->biaya_total) + $harga);
+            $tagihan->biaya_total = strval(intval($tagihan->biaya_kamar) + $harga);
             $tagihan->save();
 
             $pesan_obat = PesanObat::find($request->id_obat);
