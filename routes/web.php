@@ -31,9 +31,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MainController::class, 'index']);
 Route::get('/login', [MainController::class, 'login'])->name('login');
 Route::get('/register', [MainController::class, 'register']);
+Route::get('/bedcapacity', [MainController::class, 'bedCapacity']);
 Route::post('/register/proses', [Authentication::class, 'prosesRegistration'])->name('prosesRegis');
 Route::post('/login/proses', [Authentication::class, 'prosesLogin'])->name('prosesLogin');
 Route::get('/signOut', [Authentication::class, 'signOut'])->name('signOut');
+
 
 // !ADMIN
 Route::group(['middleware' => ['role:admin']], function () {

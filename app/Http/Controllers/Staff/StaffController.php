@@ -30,7 +30,10 @@ class StaffController extends Controller
         $inap = Tagihan::where('jenis_rawat', 'Rawat Inap')->orderBy('check_in')->get();
         $jalan = Tagihan::where('jenis_rawat', 'Rawat Jalan')->orderBy('check_in')->get();
 
-        return view('staff/dashboard', compact('page', 'inap', 'jalan', 'total_kamar', 'total_kamar_terisi', 'total_rawat_jalan', 'total_rawat_inap'));
+        $pasiendaftar = Patient::get();
+        // $rekam_medis = Tagihan::where('id_hospital',current_staff()->)->count();
+
+        return view('staff/dashboard', compact('page', 'inap', 'jalan', 'total_kamar', 'total_kamar_terisi', 'total_rawat_jalan', 'total_rawat_inap', 'pasiendaftar'));
     }
 
     public function get_patients()

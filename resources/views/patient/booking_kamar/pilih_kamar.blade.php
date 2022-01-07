@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div class="container d-flex justify-content-center">
+<div class="container d-flex justify-content-center mb-5">
     <div class="row g-4 mt-5">
         @forelse ($kamar as $data)
         <div class="modal fade" id="book{{$data->id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -56,12 +56,13 @@
         <div class="col">
             <div class="card shadow" style="width: 18rem;">
                 <img src="/images/kamar/{{$hospital->nama}}/{{$data->gambar}}" class="card-img-top" alt="...">
-                <div class="card-body" style="height: 330px">
+                <div class="card-body" style="height: 380px">
                     <h6 class="card-title">Kelas {{$data->kelas}}</h6>
                     <h5 class="card-title">{{$data->nama}}</h5>
                     <p class="card-text">{{Str::limit($data->deskripsi, 100,
                         $end='...')}}</p>
                     <h6 class="card-title">{{rupiah($data->harga)}}</h6>
+                    <h6 class="card-title">Tersedia: {{$data->qty}}</h6>
 
                     <button type="button" data-bs-toggle="modal" data-bs-target="#book{{$data->id}}"
                         class="btn bg-gradient-dark w-100 my-4 mb-2">Book Now</button>
