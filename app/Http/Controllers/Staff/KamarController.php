@@ -92,7 +92,10 @@ class KamarController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pengelola = current_staff();
+        $page = $pengelola->rs . ' | Tambah Kamar';
+        $kamar = Kamar::find($id);
+        return view('staff.kamar.update_kamar', compact('page', 'kamar'));
     }
 
     /**
@@ -104,7 +107,36 @@ class KamarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pengelola = current_staff();
+        $imgName = $request->image;
+
+        $imgName = $request->image;
+        if ($request->image) {
+            $imgName = $request->image->getClientOriginalName() . '-' . time()
+                . '.' . $request->image->extension();
+            $kamar = Kamar::find($id)->update([
+                'nama' => $request->nama,
+                'kelas' => $request->kelas,
+                'harga' => $request->harga,
+                'qty' => $request->qty,
+                'deskripsi' => $request->deskripsi,
+                'gambar' => $imgName
+            ]);
+
+            if ($kamar) {
+                $request->image->move(public_path('images/kamar/' . $pengelola->rs), $imgName);
+            }
+        } else {
+            Kamar::find($id)->update([
+                'nama' => $request->nama,
+                'kelas' => $request->kelas,
+                'harga' => $request->harga,
+                'qty' => $request->qty,
+                'deskripsi' => $request->deskripsi,
+            ]);
+        }
+
+        return redirect('/staff/kamar');
     }
 
     /**

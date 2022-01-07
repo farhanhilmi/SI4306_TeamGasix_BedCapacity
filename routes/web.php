@@ -47,6 +47,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('data/hospitals', HospitalController::class);
     // PATIENT
     Route::resource('data/patient', PatientController::class);
+    Route::post('data/rekap/bulanan', [AdminController::class, 'rekapbulanan']);
 });
 
 
