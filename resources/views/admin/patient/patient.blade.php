@@ -59,8 +59,8 @@
 
                                 </td>
                                 <td class="align-middle text-center">
-                                    <a href="/data/patient/{{$data->id}}/show"
-                                        class="text-info btn btn-sm text-sm font-weight-bold">Detail</a>
+                                    {{-- <a href="/data/patient/{{$data->id}}/show"
+                                        class="text-info btn btn-sm text-sm font-weight-bold">Detail</a> --}}
                                     <form action="/data/patient/{{$data->id}}" method="post">
                                         @csrf
                                         @method('DELETE')

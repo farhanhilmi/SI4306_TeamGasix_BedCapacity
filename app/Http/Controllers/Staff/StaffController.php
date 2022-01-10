@@ -22,15 +22,16 @@ class StaffController extends Controller
         $total_kamar_terisi = DB::table('rawat')->where('jenis_rawat', 'Rawat Inap')->where('id_hospital', current_staff()->id_hospital)->count();
 
         // $total_kamar_terisi = $total_kamar - $total_rawat_inap_saat_ini;
+        $pengelola = current_staff();
 
         $total_rawat_jalan = DB::table('tagihan')->where('jenis_rawat', 'Rawat Jalan')->count();
-        $total_rawat_inap = DB::table('tagihan')->where('jenis_rawat', 'Rawat Inap')->count();
-        $pengelola = current_staff();
+        $total_rawat_inap = Tagihan::join('pesan_kamar', 'pesan_kamar.id', 'tagihan.id_pesan_kamar')->where('pesan_kamar.id_hospital', $pengelola->id_hospital)->count();
         $page = $pengelola->rs . ' | Dashboard';
-        $inap = Tagihan::where('jenis_rawat', 'Rawat Inap')->orderBy('check_in')->get();
+        $inap = Tagihan::join('pesan_kamar', 'pesan_kamar.id', 'tagihan.id_pesan_kamar')->where('pesan_kamar.id_hospital', $pengelola->id_hospital)->orderBy('check_in')->get();
+
         $jalan = Tagihan::where('jenis_rawat', 'Rawat Jalan')->orderBy('check_in')->get();
 
-        $pasiendaftar = Patient::get();
+        $pasiendaftar = Patient::join('pesan_kamar', 'pesan_kamar.id_patient', 'patients.id')->where('pesan_kamar.id_hospital', $pengelola->id_hospital)->get();
         // $rekam_medis = Tagihan::where('id_hospital',current_staff()->)->count();
 
         return view('staff/dashboard', compact('page', 'inap', 'jalan', 'total_kamar', 'total_kamar_terisi', 'total_rawat_jalan', 'total_rawat_inap', 'pasiendaftar'));
@@ -40,14 +41,14 @@ class StaffController extends Controller
     {
         $pengelola = current_staff();
         $page = $pengelola->rs . ' | Data Pasien';
-        $patients = Patient::orderBy('nama')->get();
+        $patients = Patient::join('pesan_kamar', 'pesan_kamar.id_patient', 'patients.id')->where('pesan_kamar.id_hospital', $pengelola->id_hospital)->get();
         return view('staff/patients', compact('page', 'patients'));
     }
     public function data_pesan_obat()
     {
         $pengelola = current_staff();
         $page = $pengelola->rs . ' | Data Pesan Obat';
-        $pesan_obat = PesanObat::join('tagihan', 'tagihan.id_pesan_obat', 'pesan_obat.id')->where('tagihan.status', '!=', 'Sudah Bayar')->orderBy('created_at')->get(['pesan_obat.*', 'tagihan.id AS id_tagihan']);
+        $pesan_obat = PesanObat::join('tagihan', 'tagihan.id_pesan_obat', 'pesan_obat.id')->join('pesan_kamar', 'pesan_kamar.id', 'tagihan.id_pesan_kamar')->where('tagihan.status', '!=', 'Sudah Bayar')->where('pesan_kamar.id_hospital', $pengelola->id_hospital)->orderBy('created_at')->get(['pesan_obat.*', 'tagihan.id AS id_tagihan']);
         return view('staff/pesan_obat', compact('page', 'pesan_obat'));
     }
 

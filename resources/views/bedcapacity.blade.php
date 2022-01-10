@@ -39,9 +39,10 @@
                 <h2 class="text-center mb-4">Kamar yang tersedia saat ini</h2>
                 <div class="row justify-content-center">
                     @forelse ($hospital as $data)
-                    <div class="col">
+                    <div class="col g-4">
                         <div class="card shadow" style="width: 20rem;">
-                            <img src="/images/kamar/{{$data->nama_rs}}/{{$data->gambar}}" class="card-img-top" alt="...">
+                            <img src="/images/kamar/{{$data->nama_rs}}/{{$data->gambar}}" class="card-img-top"
+                                alt="...">
                             <div class="card-body d-flex flex-column justify-content-between" style="height: 400px">
                                 <div class="">
                                     <h6 class="card-title">Kelas {{$data->kelas}}</h6>
@@ -54,7 +55,7 @@
                                     <h5 class="card-title fw-bold">{{$data->nama_rs}}</h5>
                                 </div>
 
-                                <a href="/login" class="btn bg-primary w-100 my-4 mb-2">Book Now</a>
+                                <a href="/login" class="btn bg-primary text-white w-100 my-4 mb-2">Book Now</a>
                             </div>
                         </div>
                     </div>

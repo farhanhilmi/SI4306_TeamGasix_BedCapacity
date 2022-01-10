@@ -23,8 +23,8 @@ class KamarController extends Controller
      */
     public function index()
     {
-        $kamars = Kamar::orderBy('nama')->get();
         $pengelola = current_staff();
+        $kamars = Kamar::orderBy('nama')->where('id_hospital', $pengelola->id_hospital)->get();
         $page = $pengelola->rs . ' | Data Kamar';
         return view('staff.kamar.kamar', compact('kamars', 'page'));
     }

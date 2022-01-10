@@ -89,6 +89,7 @@
 
 
 
+
 <div class="row my-4">
   <div class="container">
     <div class="card p-4 mb-3">
@@ -97,8 +98,17 @@
           <form action="/data/rekap/bulanan" method="post">
             <div class="">
               @csrf
+              {{-- <div class="">
+                <label for="exampleInputEmail1" class="form-label">Rekap Harian</label>
+                <select name="date" class="form-select" aria-label="Default select example">
+                  <option selected disabled>Pilih Date</option>
+                  @foreach ($date as $item)
+                  <option value="{{$item->date}}">{{$item->date}}</option>
+                  @endforeach
+                </select>
+              </div> --}}
               <div class="">
-                <label for="exampleInputEmail1" class="form-label">Rekap Bulanan</label>
+                <label for="exampleInputEmail1" class="form-label">Rekap Data</label>
                 <select name="bulan" class="form-select" aria-label="Default select example">
                   <option selected disabled>Pilih Bulan</option>
                   <option value="01">January</option>
@@ -122,7 +132,6 @@
 
 
         <div class="col-8 d-flex align-items-center justify-content-center">
-
           @if (isset($bulan))
           @php
           $monthNum = $bulan;
